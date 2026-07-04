@@ -7,7 +7,7 @@ import anthropic
 from sqlalchemy import select, text
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from models.intelligence import KnowledgeChunk
+from models.repository import KnowledgeChunk
 
 
 EMBEDDING_MODEL = "text-embedding-3-small"  # OpenAI — 1536 dims, cheap

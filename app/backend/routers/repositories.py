@@ -1,18 +1,14 @@
-import os
 from fastapi import APIRouter, Depends, HTTPException, BackgroundTasks
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from pydantic import BaseModel
-import anthropic
-import openai
 
 from db import get_db
 from models.repository import Repository, RuleBook, WebhookFinding
 from routers.deps import require_workspace
+from services.indexing import run_indexing
 
 router = APIRouter()
-
-LLM_PROVIDER = os.getenv("LLM_PROVIDER", "anthropic")
 
 
 class AddRepositoryRequest(BaseModel):
@@ -64,7 +60,7 @@ async def add_repository(
     await db.commit()
     await db.refresh(repository)
 
-    background_tasks.add_task(_run_indexing, repository.id, workspace_id)
+    background_tasks.add_task(run_indexing, repository.id)
     return {"id": repository.id, "name": repository.name, "status": "indexing_started"}
 
 
@@ -136,7 +132,7 @@ async def regenerate_rulebook(
     repository.status = "indexing"
     await db.commit()
 
-    background_tasks.add_task(_run_indexing, repository_id, workspace_id)
+    background_tasks.add_task(run_indexing, repository_id)
     return {"status": "regeneration_started"}
 
 
@@ -167,92 +163,5 @@ async def get_findings(
     ]
 
 
-async def _run_indexing(repository_id: str, workspace_id: str):
-    """Background task: index repository (fetch issues/PRs/commits) and compile CLAUDE.md/SKILL.md."""
-    # This will be implemented in the ingestion/compiler module.
-    # For now, it updates repository status to active and inserts a dummy CLAUDE.md
-    from db import AsyncSessionLocal
-    from models.repository import Repository as RepoModel, RuleBook as RuleBookModel
-    from sqlalchemy import select as _select
-    import datetime
-
-    async with AsyncSessionLocal() as db:
-        repo_result = await db.execute(
-            _select(RepoModel).where(RepoModel.id == repository_id)
-        )
-        repository = repo_result.scalar_one_or_none()
-        if not repository:
-            return
-
-        # Create dummy CLAUDE.md and SKILL.md
-        dummy_claude_content = f"""# CLAUDE.md for {repository.owner}/{repository.name}
-        
-## Build Commands
-- Build project: npm run build
-- Lint: npm run lint
-
-## Code Style
-- Use TypeScript for frontend
-- Follow ESLint configuration
-- Keep components small and modular
-"""
-
-        dummy_skill_content = f"""# Deploy Skill for {repository.owner}/{repository.name}
-
-## Trigger
-- Deploy commit on main branch
-
-## Instructions
-1. Run lint and test
-2. Build production assets
-3. Deploy to hosting provider (Vercel/Railway)
-"""
-
-        # Delete old current rulebooks
-        old_rulebooks = await db.execute(
-            _select(RuleBookModel).where(
-                RuleBookModel.repository_id == repository_id,
-                RuleBookModel.is_current == True
-            )
-        )
-        for rb in old_rulebooks.scalars():
-            rb.is_current = False
-
-        claude_rb = RuleBookModel(
-            workspace_id=workspace_id,
-            repository_id=repository_id,
-            filename="CLAUDE.md",
-            content=dummy_claude_content,
-            is_current=True,
-        )
-        skill_rb = RuleBookModel(
-            workspace_id=workspace_id,
-            repository_id=repository_id,
-            filename="SKILL.md",
-            content=dummy_skill_content,
-            is_current=True,
-        )
-
-        db.add(claude_rb)
-        db.add(skill_rb)
-
-        # Create a dummy webhook finding to demonstrate functionality
-        dummy_finding = WebhookFinding(
-            workspace_id=workspace_id,
-            repository_id=repository_id,
-            event_type="pull_request",
-            external_id="6021",
-            severity="warning",
-            title="PR uses auto-close keyword but only adds tests",
-            details={
-                "pr_number": 6021,
-                "title": "fix(mem0): add test for issue #5915",
-                "linked_issue": 5915,
-                "explanation": "PR #6021 claims 'Fixes #5915' but the diff only touches test files and no source files in the described module."
-            },
-            checked_at=str(datetime.datetime.utcnow()),
-        )
-        db.add(dummy_finding)
-
-        repository.status = "active"
-        await db.commit()
+# Indexing pipeline lives in services/indexing.py (ingest → compile → check).
+# Mock vs live GitHub is controlled by the GITHUB_MODE env var (see services/github_client.py).
