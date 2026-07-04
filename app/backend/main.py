@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import text
 
-from routers import auth, workspaces, repositories, chat
+from routers import auth, workspaces, repositories, chat, webhooks
 from models.base import Base
 from db import engine
 
@@ -39,6 +39,7 @@ app.include_router(auth.router, prefix="/api/auth", tags=["auth"])
 app.include_router(workspaces.router, prefix="/api/workspaces", tags=["workspaces"])
 app.include_router(repositories.router, prefix="/api/repositories", tags=["repositories"])
 app.include_router(chat.router, prefix="/api/chat", tags=["chat"])
+app.include_router(webhooks.router, prefix="/api/webhooks", tags=["webhooks"])
 
 
 
