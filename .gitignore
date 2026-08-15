@@ -35,3 +35,6 @@ build/
 *.njsproj
 *.sln
 *.swp
+output/verification_context.json
+output/verification_mem0_streamlit.json
+output/verification_subset.json

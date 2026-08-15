@@ -13,6 +13,7 @@ from models.repository import Repository, RepositoryActivity, WebhookFinding
 from services.github_client import GitHubClient
 
 CLOSING_KEYWORD = re.compile(r"\b(?:fix(?:es|ed)?|close[sd]?|resolve[sd]?)\s+#(\d+)", re.IGNORECASE)
+HTML_COMMENT = re.compile(r"<!--.*?-->", re.DOTALL)
 
 _TEST_PATTERNS = (
     re.compile(r"(^|/)tests?/"),
@@ -28,7 +29,16 @@ def is_test_file(path: str) -> bool:
 
 
 def extract_linked_issue(text: str) -> int | None:
-    match = CLOSING_KEYWORD.search(text or "")
+    """Find a real closing-keyword reference, ignoring PR-template boilerplate.
+
+    Found empirically scanning real repos (pydantic, vite): GitHub's default
+    PR template includes example text like `<!-- e.g. "fixes #123" -->`. That
+    literal example text matches the closing-keyword regex just as well as a
+    genuine reference, and #123 is a real, usually-unrelated issue in nearly
+    every repo old enough to have one — so every unedited template produces a
+    false match. Stripping HTML comments before matching removes the class.
+    """
+    match = CLOSING_KEYWORD.search(HTML_COMMENT.sub("", text or ""))
     return int(match.group(1)) if match else None
 
 

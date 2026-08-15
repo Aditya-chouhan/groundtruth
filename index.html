@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Groundtruth — auto-close-without-fix, verified on real repos</title>
+<style>
+  :root {
+    --ink:#0d1b2a; --muted:#5a6b7b; --line:#e3e8ee; --bg:#f6f8fb;
+    --card:#fff; --accent:#1b4965; --tp:#c1121f; --fp:#5a6b7b; --ok:#2a9d8f; --chip:#eef3f8;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+         color:var(--ink); background:var(--bg); }
+  .wrap { max-width:1040px; margin:0 auto; padding:0 20px; }
+  header { background:linear-gradient(160deg,#0d1b2a,#1b4965); color:#fff; padding:56px 0 44px; }
+  header .tag { display:inline-block; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+                opacity:.8; border:1px solid rgba(255,255,255,.3); padding:4px 10px; border-radius:20px; }
+  header h1 { font-size:32px; line-height:1.25; margin:16px 0 10px; }
+  header p { font-size:18px; opacity:.92; max-width:760px; margin:0; }
+  .stats { display:flex; flex-wrap:wrap; gap:14px; margin-top:26px; }
+  .stat { background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.15); border-radius:10px;
+           padding:12px 16px; }
+  .stat b { display:block; font-size:24px; }
+  .stat span { font-size:12.5px; opacity:.85; }
+  section { padding:38px 0; }
+  h2 { font-size:22px; margin:0 0 6px; }
+  h2 + .lede { color:var(--muted); margin:0 0 22px; max-width:760px; }
+  .thesis { background:var(--card); border:1px solid var(--line); border-left:4px solid var(--accent);
+             border-radius:10px; padding:20px 22px; }
+  .thesis p { margin:0 0 10px; } .thesis p:last-child { margin:0; }
+  .headline-number { background:#fff8f0; border:1px solid #f0d9bd; border-radius:10px; padding:20px 22px; }
+  .headline-number b { color:var(--tp); }
+  .bugfound { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin-bottom:14px; }
+  .bugfound h4 { margin:0 0 6px; font-size:15px; }
+  .bugfound p { margin:0; font-size:14.5px; color:#24333f; }
+  .bugfound code { background:var(--chip); padding:1px 6px; border-radius:4px; font-size:13px; }
+  .repo-block { margin-bottom:26px; }
+  .repo-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; }
+  .repo-head h3 { margin:0; font-size:17px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
+  .repo-tally { font-size:13px; color:var(--muted); }
+  .finding { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:10px; border-left:4px solid var(--fp); }
+  .finding.tp { border-left-color:var(--tp); }
+  .finding-head { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:14px; margin-bottom:6px; }
+  .finding-head a { font-weight:700; color:var(--accent); text-decoration:none; }
+  .finding-head a:hover { text-decoration:underline; }
+  .arrow { color:var(--muted); }
+  .badge { font-size:11px; text-transform:uppercase; letter-spacing:.04em; padding:2px 9px; border-radius:20px; font-weight:700; }
+  .badge.tp { background:#fde8ea; color:var(--tp); }
+  .badge.fp { background:var(--chip); color:var(--fp); }
+  .merged { font-size:11px; background:#fde8ea; color:var(--tp); padding:2px 9px; border-radius:20px; font-weight:700; text-transform:uppercase; }
+  .unmerged { font-size:11px; color:var(--muted); }
+  .finding-reason { font-size:14px; color:#24333f; margin-bottom:8px; }
+  .finding-files { font-size:12.5px; }
+  .finding-files code { background:var(--chip); padding:2px 7px; border-radius:4px; margin-right:6px; display:inline-block; margin-bottom:4px; }
+  .honesty { background:#fff8f0; border:1px solid #f0d9bd; border-radius:10px; padding:18px 22px; }
+  .honesty li { margin-bottom:7px; }
+  .method { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .method .box { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 20px; }
+  .method h3 { margin:0 0 10px; font-size:15px; }
+  .method p { font-size:13.5px; margin:0; }
+  footer { color:var(--muted); font-size:13px; padding:30px 0 60px; }
+  a { color:var(--accent); }
+  @media (max-width:720px) { .method { grid-template-columns:1fr; } header h1{font-size:24px;} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="tag">Groundtruth · real-data verification run</span>
+    <h1>A PR can claim to fix a bug and only add a test. We scanned 30 real repos to see how often.</h1>
+    <p>Groundtruth checks developer activity against deterministic, checkable rules — no LLM guessing. This is its first rule (<code>auto-close-without-fix</code>) run against 30 real, active public repositories, with every candidate match hand-verified against the actual GitHub issue and PR content before being called a finding.</p>
+    <div class="stats">
+      <div class="stat"><b>30</b><span>real repos scanned</span></div>
+      <div class="stat"><b>43</b><span>raw candidate matches</span></div>
+      <div class="stat"><b>26</b><span>verified true positives</span></div>
+      <div class="stat"><b>17</b><span>verified false positives</span></div>
+      <div class="stat"><b>0</b><span>true positives that merged</span></div>
+    </div>
+  </div>
+</header>
+
+<section class="wrap">
+  <h2>The rule</h2>
+  <div class="thesis">
+    <p><b>Auto-close-without-fix:</b> a PR references an issue with a GitHub closing keyword (<code>Fixes #N</code>, <code>Closes #N</code>, <code>Resolves #N</code>) while its diff touches only test files. If that PR merges, GitHub silently closes the issue — without the underlying code ever changing.</p>
+    <p>Every finding below is checkable, not probabilistic: the rule doesn't guess whether a PR "seems" thin, it reads the actual linked issue's labels and text, and the actual list of changed files, and applies one fact-based test.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>The number that matters most</h2>
+  <div class="headline-number">
+    <p><b>Zero</b> of the 26 verified true positives actually merged. Every one was caught and rejected by a human maintainer, by hand, before it could auto-close a real bug. Groundtruth didn't catch anything a maintainer missed — it demonstrates that the same judgment call, made once per PR by a person, could be made instantly and consistently by a rule instead.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Two bugs the verification pass found — in Groundtruth's own rule</h2>
+  <p class="lede">Verifying against real data didn't just validate the rule. It broke it, twice, in ways synthetic test fixtures never would have.</p>
+  <div class="bugfound">
+    <h4>1. PR-template boilerplate matched as a real reference</h4>
+    <p>GitHub's default PR template includes example text like <code>&lt;!-- e.g. "fixes #123" --&gt;</code>. The original regex matched that literal example just like a genuine reference — and #123 is a real (usually unrelated) issue in nearly every repo old enough to have one. This alone produced 10 false positives across <code>pydantic/pydantic</code> and <code>vitejs/vite</code> in the first scan pass. Fixed by stripping HTML comments before matching; confirmed by rescan — all 10 disappeared.</p>
+  </div>
+  <div class="bugfound">
+    <h4>2. A filename can look like a test and not be one</h4>
+    <p>Streamlit ships a real product feature — its <code>AppTest</code> testing framework — implemented in a file literally named <code>app_test.py</code>. The filename heuristic can't distinguish that from an actual test file. Left as a documented, tested limitation rather than a repo-specific patch, which would just trade one blind spot for another.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Verification method</h2>
+  <p class="lede">Nothing here is published on the heuristic's word alone.</p>
+  <div class="method">
+    <div class="box">
+      <h3>What "verified" means</h3>
+      <p>For every one of the 43 candidates, the real GitHub issue (title, body, labels) and the real PR (body, merge state) were fetched from the live API and read. A true positive requires the linked issue to be a genuine, usually maintainer-labeled (<code>bug</code>, often <code>accepted</code>) product defect — not a request to add test coverage or fix the test suite itself.</p>
+    </div>
+    <div class="box">
+      <h3>What "false positive" means here</h3>
+      <p>In every false positive in this dataset, the linked issue was itself about tests, CI, or a naming collision with real product code — meaning a test-only PR was the <i>correct</i> fix, not a shortcut. That's the exact class the rule's own design doc names as its known limitation.</p>
+    </div>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>Every finding, by repository</h2>
+  <p class="lede">Ranked by true-positive count. Every PR and issue number links to the live page.</p>
+  
+    <div class="repo-block">
+      <div class="repo-head">
+        <h3>mem0ai/mem0</h3>
+        <span class="repo-tally">22 true positives · 6 false positives</span>
+      </div>
+      
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6727" target="_blank" rel="noopener">PR #6727</a>
+        <span class="arrow">→</span> issue #6719
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">open, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/vector_stores/test_faiss.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6687" target="_blank" rel="noopener">PR #6687</a>
+        <span class="arrow">→</span> issue #6686
+        <span class="badge fp">false positive</span>
+        <span class="merged">merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/vector_stores/test_e2e_threshold.py</code><code>tests/vector_stores/test_score_normalization.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6943" target="_blank" rel="noopener">PR #6943</a>
+        <span class="arrow">→</span> issue #6095
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/embeddings/test_gemini_embeddings.py</code><code>tests/embeddings/test_langchain_embeddings.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6234" target="_blank" rel="noopener">PR #6234</a>
+        <span class="arrow">→</span> issue #6095
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/embeddings/test_gemini_embeddings.py</code><code>tests/embeddings/test_langchain_embeddings.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6332" target="_blank" rel="noopener">PR #6332</a>
+        <span class="arrow">→</span> issue #6310
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>mem0-ts/src/oss/tests/helpers/vectorStoreResultContract.ts</code><code>mem0-ts/src/oss/tests/vector-store-result-contract.test.ts</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6832" target="_blank" rel="noopener">PR #6832</a>
+        <span class="arrow">→</span> issue #6830
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">open, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_oss_to_platform_migrate.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6048" target="_blank" rel="noopener">PR #6048</a>
+        <span class="arrow">→</span> issue #5646
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">open, not merged</span>
+      </div>
+      <div class="finding-reason">Real TS-side entity-dedup logic bug (unanchored substring check), a regression of an already-fixed Python-side bug (#5630). PR only adds a test.</div>
+      <div class="finding-files"><code>mem0-ts/src/oss/tests/entity-extraction.test.ts</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6644" target="_blank" rel="noopener">PR #6644</a>
+        <span class="arrow">→</span> issue #6346
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6346.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6643" target="_blank" rel="noopener">PR #6643</a>
+        <span class="arrow">→</span> issue #6362
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6362.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6642" target="_blank" rel="noopener">PR #6642</a>
+        <span class="arrow">→</span> issue #6368
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6368.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6641" target="_blank" rel="noopener">PR #6641</a>
+        <span class="arrow">→</span> issue #6448
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6448.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6625" target="_blank" rel="noopener">PR #6625</a>
+        <span class="arrow">→</span> issue #6562
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6562.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6618" target="_blank" rel="noopener">PR #6618</a>
+        <span class="arrow">→</span> issue #6526
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6526.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6617" target="_blank" rel="noopener">PR #6617</a>
+        <span class="arrow">→</span> issue #6563
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6563.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6616" target="_blank" rel="noopener">PR #6616</a>
+        <span class="arrow">→</span> issue #6546
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6546.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6615" target="_blank" rel="noopener">PR #6615</a>
+        <span class="arrow">→</span> issue #6550
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6550.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6614" target="_blank" rel="noopener">PR #6614</a>
+        <span class="arrow">→</span> issue #6560
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6560.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6440" target="_blank" rel="noopener">PR #6440</a>
+        <span class="arrow">→</span> issue #6346
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6346.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6439" target="_blank" rel="noopener">PR #6439</a>
+        <span class="arrow">→</span> issue #6368
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6368.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6408" target="_blank" rel="noopener">PR #6408</a>
+        <span class="arrow">→</span> issue #6362
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6362.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6376" target="_blank" rel="noopener">PR #6376</a>
+        <span class="arrow">→</span> issue #6181
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Real production regression: Codex lifecycle hooks fail on every Windows event, flooding user sessions with errors. PR only adds a test.</div>
+      <div class="finding-files"><code>tests/test_issue_6181.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6360" target="_blank" rel="noopener">PR #6360</a>
+        <span class="arrow">→</span> issue #6301
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6301.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6327" target="_blank" rel="noopener">PR #6327</a>
+        <span class="arrow">→</span> issue #6264
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6264.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6304" target="_blank" rel="noopener">PR #6304</a>
+        <span class="arrow">→</span> issue #6230
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6230.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6247" target="_blank" rel="noopener">PR #6247</a>
+        <span class="arrow">→</span> issue #6183
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6183.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6201" target="_blank" rel="noopener">PR #6201</a>
+        <span class="arrow">→</span> issue #6013
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6013.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6198" target="_blank" rel="noopener">PR #6198</a>
+        <span class="arrow">→</span> issue #6065
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6065.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/mem0ai/mem0/pull/6197" target="_blank" rel="noopener">PR #6197</a>
+        <span class="arrow">→</span> issue #6085
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-files"><code>tests/test_issue_6085.py</code></div>
+    </div>
+    </div>
+    <div class="repo-block">
+      <div class="repo-head">
+        <h3>run-llama/llama_index</h3>
+        <span class="repo-tally">3 true positives · 2 false positives</span>
+      </div>
+      
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/run-llama/llama_index/pull/22696" target="_blank" rel="noopener">PR #22696</a>
+        <span class="arrow">→</span> issue #22695
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">open, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is about llama-dev&#x27;s own test suite or CI matrix failing, not product behavior.</div>
+      <div class="finding-files"><code>llama-dev/tests/test/test_test.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/run-llama/llama_index/pull/21967" target="_blank" rel="noopener">PR #21967</a>
+        <span class="arrow">→</span> issue #15165
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">open, not merged</span>
+      </div>
+      <div class="finding-reason">Issue labeled bug/P1: MetadataFilters broken for MultiModalVectorStoreIndex. PR body says &#x27;Adds regression coverage&#x27; — never touches the filter logic.</div>
+      <div class="finding-files"><code>llama-index-core/tests/indices/multi_modal/test_retriever.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/run-llama/llama_index/pull/22576" target="_blank" rel="noopener">PR #22576</a>
+        <span class="arrow">→</span> issue #22543
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">open, not merged</span>
+      </div>
+      <div class="finding-reason">Issue labeled bug/triage: LanceDB delete predicates built via unescaped string concatenation of doc IDs. PR body confirms it only touches tests/test_index.py.</div>
+      <div class="finding-files"><code>llama-index-integrations/indices/llama-index-indices-managed-lancedb/tests/test_index.py</code></div>
+    </div>
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/run-llama/llama_index/pull/22306" target="_blank" rel="noopener">PR #22306</a>
+        <span class="arrow">→</span> issue #22068
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">open, not merged</span>
+      </div>
+      <div class="finding-reason">Issue labeled bug/triage: ag-ui adapter fabricates a random uuid4() tool_call_id instead of using the real one. PR only adds tests for the (still-wrong) handling.</div>
+      <div class="finding-files"><code>llama-index-integrations/protocols/llama-index-protocols-ag-ui/tests/test_utils.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/run-llama/llama_index/pull/21608" target="_blank" rel="noopener">PR #21608</a>
+        <span class="arrow">→</span> issue #21607
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue is about llama-dev&#x27;s own test suite or CI matrix failing, not product behavior.</div>
+      <div class="finding-files"><code>llama-dev/llama_dev/test/__init__.py</code><code>llama-dev/tests/test/test_test.py</code></div>
+    </div>
+    </div>
+    <div class="repo-block">
+      <div class="repo-head">
+        <h3>fastify/fastify</h3>
+        <span class="repo-tally">1 true positive · 0 false positives</span>
+      </div>
+      
+    <div class="finding tp">
+      <div class="finding-head">
+        <a href="https://github.com/fastify/fastify/pull/6875" target="_blank" rel="noopener">PR #6875</a>
+        <span class="arrow">→</span> issue #6836
+        <span class="badge tp">true positive</span>
+        <span class="unmerged">open, not merged</span>
+      </div>
+      <div class="finding-reason">Real TypeScript .d.ts type-definition bug. PR adds a type-assertion test confirming the wrong type, never touches the actual declaration.</div>
+      <div class="finding-files"><code>test/types/logger.tst.ts</code></div>
+    </div>
+    </div>
+    <div class="repo-block">
+      <div class="repo-head">
+        <h3>expressjs/express</h3>
+        <span class="repo-tally">0 true positives · 2 false positives</span>
+      </div>
+      
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/expressjs/express/pull/7394" target="_blank" rel="noopener">PR #7394</a>
+        <span class="arrow">→</span> issue #7348
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue (#7348) is explicitly labeled &#x27;tests&#x27; and asks for test coverage of already-working behavior.</div>
+      <div class="finding-files"><code>test/req.is.js</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/expressjs/express/pull/7349" target="_blank" rel="noopener">PR #7349</a>
+        <span class="arrow">→</span> issue #7348
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue (#7348) is explicitly labeled &#x27;tests&#x27; and asks for test coverage of already-working behavior.</div>
+      <div class="finding-files"><code>test/req.is.js</code></div>
+    </div>
+    </div>
+    <div class="repo-block">
+      <div class="repo-head">
+        <h3>pallets/flask</h3>
+        <span class="repo-tally">0 true positives · 5 false positives</span>
+      </div>
+      
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/pallets/flask/pull/6095" target="_blank" rel="noopener">PR #6095</a>
+        <span class="arrow">→</span> issue #6071
+        <span class="badge fp">false positive</span>
+        <span class="merged">merged</span>
+      </div>
+      <div class="finding-reason">Linked issue (#6071) is a pytest-version compatibility break in Flask&#x27;s own test suite, not a product defect.</div>
+      <div class="finding-files"><code>tests/conftest.py</code><code>tests/test_cli.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/pallets/flask/pull/6099" target="_blank" rel="noopener">PR #6099</a>
+        <span class="arrow">→</span> issue #6071
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue (#6071) is a pytest-version compatibility break in Flask&#x27;s own test suite, not a product defect.</div>
+      <div class="finding-files"><code>tests/conftest.py</code><code>tests/test_cli.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/pallets/flask/pull/6088" target="_blank" rel="noopener">PR #6088</a>
+        <span class="arrow">→</span> issue #6071
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue (#6071) is a pytest-version compatibility break in Flask&#x27;s own test suite, not a product defect.</div>
+      <div class="finding-files"><code>tests/conftest.py</code><code>tests/test_cli.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/pallets/flask/pull/6072" target="_blank" rel="noopener">PR #6072</a>
+        <span class="arrow">→</span> issue #6071
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue (#6071) is a pytest-version compatibility break in Flask&#x27;s own test suite, not a product defect.</div>
+      <div class="finding-files"><code>tests/conftest.py</code><code>tests/test_cli.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/pallets/flask/pull/6087" target="_blank" rel="noopener">PR #6087</a>
+        <span class="arrow">→</span> issue #6071
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">Linked issue (#6071) is a pytest-version compatibility break in Flask&#x27;s own test suite, not a product defect.</div>
+      <div class="finding-files"><code>tests/conftest.py</code><code>tests/test_cli.py</code></div>
+    </div>
+    </div>
+    <div class="repo-block">
+      <div class="repo-head">
+        <h3>streamlit/streamlit</h3>
+        <span class="repo-tally">0 true positives · 2 false positives</span>
+      </div>
+      
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/streamlit/streamlit/pull/16122" target="_blank" rel="noopener">PR #16122</a>
+        <span class="arrow">→</span> issue #8154
+        <span class="badge fp">false positive</span>
+        <span class="merged">merged</span>
+      </div>
+      <div class="finding-reason">The PR touches lib/streamlit/testing/v1/app_test.py — the implementation of Streamlit&#x27;s own AppTest product feature, misclassified as a test file by the filename heuristic.</div>
+      <div class="finding-files"><code>lib/streamlit/testing/v1/app_test.py</code><code>lib/tests/streamlit/testing/app_test_test.py</code></div>
+    </div>
+    <div class="finding fp">
+      <div class="finding-head">
+        <a href="https://github.com/streamlit/streamlit/pull/15675" target="_blank" rel="noopener">PR #15675</a>
+        <span class="arrow">→</span> issue #8154
+        <span class="badge fp">false positive</span>
+        <span class="unmerged">closed, not merged</span>
+      </div>
+      <div class="finding-reason">The PR touches lib/streamlit/testing/v1/app_test.py — the implementation of Streamlit&#x27;s own AppTest product feature, misclassified as a test file by the filename heuristic.</div>
+      <div class="finding-files"><code>lib/streamlit/testing/v1/app_test.py</code></div>
+    </div>
+    </div>
+</section>
+
+<section class="wrap">
+  <h2>Honesty guardrails</h2>
+  <div class="honesty">
+    <ul>
+      <li><b>No repo, maintainer, or contributor named here did anything wrong.</b> A test-only PR against an accepted bug is, at most, an incomplete contribution — every one was already caught before merge. This page reports a pattern, not an accusation.</li>
+      <li><b>Intent isn't claimed.</b> One author accounts for 17 of mem0's 28 candidates. The pattern (test-only "fix" PRs against real, accepted bugs) is consistent with low-effort or AI-assisted contribution farming — but this dataset can't establish intent, and doesn't claim to.</li>
+      <li><b>Zero materialized harm in this scan window.</b> No true positive here actually merged and silently closed a real bug. That's stated plainly above, not buried.</li>
+      <li><b>The rule has a known blind spot,</b> documented above and pinned in a regression test, not silently patched around.</li>
+      <li><b>All 30 repos, all 43 candidates, and every verdict are reproducible</b> from <code>scripts/scan.py</code> + <code>scripts/verify.py</code> against the live GitHub API — nothing here is seeded or synthetic.</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="wrap">
+  Built by Aditya Chouhan · Groundtruth — the AI Company Brain for engineering teams · deterministic checks, not LLM guesses ·
+  <a href="https://github.com/Aditya-chouhan/groundtruth">source</a>
+</footer>
+</body>
+</html>

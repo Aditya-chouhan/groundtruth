@@ -1,0 +1,833 @@
+{
+  "scanned_at": "2026-08-15T20:11:31.943283+00:00",
+  "repos_scanned": 30,
+  "repos_errored": 0,
+  "errors": [],
+  "repo_summaries": [
+    {
+      "owner": "mem0ai",
+      "name": "mem0",
+      "pr_count": 500,
+      "issue_count": 132,
+      "checked_prs": 318
+    },
+    {
+      "owner": "tiangolo",
+      "name": "fastapi",
+      "pr_count": 186,
+      "issue_count": 6,
+      "checked_prs": 12
+    },
+    {
+      "owner": "pallets",
+      "name": "flask",
+      "pr_count": 79,
+      "issue_count": 26,
+      "checked_prs": 23
+    },
+    {
+      "owner": "psf",
+      "name": "requests",
+      "pr_count": 42,
+      "issue_count": 12,
+      "checked_prs": 13
+    },
+    {
+      "owner": "encode",
+      "name": "httpx",
+      "pr_count": 1,
+      "issue_count": 0,
+      "checked_prs": 1
+    },
+    {
+      "owner": "pydantic",
+      "name": "pydantic",
+      "pr_count": 179,
+      "issue_count": 83,
+      "checked_prs": 38
+    },
+    {
+      "owner": "celery",
+      "name": "celery",
+      "pr_count": 109,
+      "issue_count": 22,
+      "checked_prs": 40
+    },
+    {
+      "owner": "run-llama",
+      "name": "llama_index",
+      "pr_count": 487,
+      "issue_count": 66,
+      "checked_prs": 182
+    },
+    {
+      "owner": "streamlit",
+      "name": "streamlit",
+      "pr_count": 495,
+      "issue_count": 73,
+      "checked_prs": 90
+    },
+    {
+      "owner": "gradio-app",
+      "name": "gradio",
+      "pr_count": 100,
+      "issue_count": 125,
+      "checked_prs": 22
+    },
+    {
+      "owner": "openai",
+      "name": "openai-python",
+      "pr_count": 141,
+      "issue_count": 22,
+      "checked_prs": 51
+    },
+    {
+      "owner": "anthropics",
+      "name": "anthropic-sdk-python",
+      "pr_count": 171,
+      "issue_count": 136,
+      "checked_prs": 104
+    },
+    {
+      "owner": "withastro",
+      "name": "astro",
+      "pr_count": 263,
+      "issue_count": 130,
+      "checked_prs": 106
+    },
+    {
+      "owner": "remix-run",
+      "name": "remix",
+      "pr_count": 95,
+      "issue_count": 20,
+      "checked_prs": 9
+    },
+    {
+      "owner": "prisma",
+      "name": "prisma",
+      "pr_count": 450,
+      "issue_count": 77,
+      "checked_prs": 101
+    },
+    {
+      "owner": "expressjs",
+      "name": "express",
+      "pr_count": 49,
+      "issue_count": 25,
+      "checked_prs": 17
+    },
+    {
+      "owner": "fastify",
+      "name": "fastify",
+      "pr_count": 132,
+      "issue_count": 40,
+      "checked_prs": 29
+    },
+    {
+      "owner": "nestjs",
+      "name": "nest",
+      "pr_count": 169,
+      "issue_count": 17,
+      "checked_prs": 5
+    },
+    {
+      "owner": "supabase",
+      "name": "supabase",
+      "pr_count": 500,
+      "issue_count": 57,
+      "checked_prs": 52
+    },
+    {
+      "owner": "n8n-io",
+      "name": "n8n",
+      "pr_count": 500,
+      "issue_count": 83,
+      "checked_prs": 83
+    },
+    {
+      "owner": "directus",
+      "name": "directus",
+      "pr_count": 423,
+      "issue_count": 106,
+      "checked_prs": 57
+    },
+    {
+      "owner": "strapi",
+      "name": "strapi",
+      "pr_count": 402,
+      "issue_count": 122,
+      "checked_prs": 72
+    },
+    {
+      "owner": "tailwindlabs",
+      "name": "tailwindcss",
+      "pr_count": 50,
+      "issue_count": 33,
+      "checked_prs": 11
+    },
+    {
+      "owner": "vitejs",
+      "name": "vite",
+      "pr_count": 289,
+      "issue_count": 152,
+      "checked_prs": 105
+    },
+    {
+      "owner": "sveltejs",
+      "name": "svelte",
+      "pr_count": 83,
+      "issue_count": 53,
+      "checked_prs": 36
+    },
+    {
+      "owner": "honojs",
+      "name": "hono",
+      "pr_count": 199,
+      "issue_count": 32,
+      "checked_prs": 54
+    },
+    {
+      "owner": "trpc",
+      "name": "trpc",
+      "pr_count": 48,
+      "issue_count": 13,
+      "checked_prs": 19
+    },
+    {
+      "owner": "langgenius",
+      "name": "dify",
+      "pr_count": 500,
+      "issue_count": 68,
+      "checked_prs": 113
+    },
+    {
+      "owner": "crewAIInc",
+      "name": "crewAI",
+      "pr_count": 500,
+      "issue_count": 95,
+      "checked_prs": 145
+    },
+    {
+      "owner": "BerriAI",
+      "name": "litellm",
+      "pr_count": 500,
+      "issue_count": 96,
+      "checked_prs": 163
+    }
+  ],
+  "candidates": [
+    {
+      "pr_number": 6727,
+      "linked_issue": 6719,
+      "changed_files": [
+        "tests/vector_stores/test_faiss.py"
+      ],
+      "explanation": "PR #6727 references issue #6719 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6727",
+      "pr_state": "open",
+      "pr_merged_at": null,
+      "pr_author": "Cyrus580529",
+      "verified": null
+    },
+    {
+      "pr_number": 6687,
+      "linked_issue": 6686,
+      "changed_files": [
+        "tests/vector_stores/test_e2e_threshold.py",
+        "tests/vector_stores/test_score_normalization.py"
+      ],
+      "explanation": "PR #6687 references issue #6686 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6687",
+      "pr_state": "closed",
+      "pr_merged_at": "2026-08-14T11:30:57Z",
+      "pr_author": "ratishjain12",
+      "verified": null
+    },
+    {
+      "pr_number": 6943,
+      "linked_issue": 6095,
+      "changed_files": [
+        "tests/embeddings/test_gemini_embeddings.py",
+        "tests/embeddings/test_langchain_embeddings.py"
+      ],
+      "explanation": "PR #6943 references issue #6095 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6943",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "kartik-mem0",
+      "verified": null
+    },
+    {
+      "pr_number": 6234,
+      "linked_issue": 6095,
+      "changed_files": [
+        "tests/embeddings/test_gemini_embeddings.py",
+        "tests/embeddings/test_langchain_embeddings.py"
+      ],
+      "explanation": "PR #6234 references issue #6095 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6234",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "Bartok9",
+      "verified": null
+    },
+    {
+      "pr_number": 6332,
+      "linked_issue": 6310,
+      "changed_files": [
+        "mem0-ts/src/oss/tests/helpers/vectorStoreResultContract.ts",
+        "mem0-ts/src/oss/tests/vector-store-result-contract.test.ts"
+      ],
+      "explanation": "PR #6332 references issue #6310 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6332",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "Bartok9",
+      "verified": null
+    },
+    {
+      "pr_number": 6832,
+      "linked_issue": 6830,
+      "changed_files": [
+        "tests/test_oss_to_platform_migrate.py"
+      ],
+      "explanation": "PR #6832 references issue #6830 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6832",
+      "pr_state": "open",
+      "pr_merged_at": null,
+      "pr_author": "rajarshidattapy",
+      "verified": null
+    },
+    {
+      "pr_number": 6048,
+      "linked_issue": 5646,
+      "changed_files": [
+        "mem0-ts/src/oss/tests/entity-extraction.test.ts"
+      ],
+      "explanation": "PR #6048 references issue #5646 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6048",
+      "pr_state": "open",
+      "pr_merged_at": null,
+      "pr_author": "DivyamTalwar",
+      "verified": null
+    },
+    {
+      "pr_number": 6644,
+      "linked_issue": 6346,
+      "changed_files": [
+        "tests/test_issue_6346.py"
+      ],
+      "explanation": "PR #6644 references issue #6346 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6644",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "Salomondiei08",
+      "verified": null
+    },
+    {
+      "pr_number": 6643,
+      "linked_issue": 6362,
+      "changed_files": [
+        "tests/test_issue_6362.py"
+      ],
+      "explanation": "PR #6643 references issue #6362 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6643",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "Salomondiei08",
+      "verified": null
+    },
+    {
+      "pr_number": 6642,
+      "linked_issue": 6368,
+      "changed_files": [
+        "tests/test_issue_6368.py"
+      ],
+      "explanation": "PR #6642 references issue #6368 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6642",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "Salomondiei08",
+      "verified": null
+    },
+    {
+      "pr_number": 6641,
+      "linked_issue": 6448,
+      "changed_files": [
+        "tests/test_issue_6448.py"
+      ],
+      "explanation": "PR #6641 references issue #6448 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6641",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "Salomondiei08",
+      "verified": null
+    },
+    {
+      "pr_number": 6625,
+      "linked_issue": 6562,
+      "changed_files": [
+        "tests/test_issue_6562.py"
+      ],
+      "explanation": "PR #6625 references issue #6562 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6625",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6618,
+      "linked_issue": 6526,
+      "changed_files": [
+        "tests/test_issue_6526.py"
+      ],
+      "explanation": "PR #6618 references issue #6526 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6618",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6617,
+      "linked_issue": 6563,
+      "changed_files": [
+        "tests/test_issue_6563.py"
+      ],
+      "explanation": "PR #6617 references issue #6563 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6617",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6616,
+      "linked_issue": 6546,
+      "changed_files": [
+        "tests/test_issue_6546.py"
+      ],
+      "explanation": "PR #6616 references issue #6546 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6616",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6615,
+      "linked_issue": 6550,
+      "changed_files": [
+        "tests/test_issue_6550.py"
+      ],
+      "explanation": "PR #6615 references issue #6550 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6615",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6614,
+      "linked_issue": 6560,
+      "changed_files": [
+        "tests/test_issue_6560.py"
+      ],
+      "explanation": "PR #6614 references issue #6560 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6614",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6440,
+      "linked_issue": 6346,
+      "changed_files": [
+        "tests/test_issue_6346.py"
+      ],
+      "explanation": "PR #6440 references issue #6346 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6440",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6439,
+      "linked_issue": 6368,
+      "changed_files": [
+        "tests/test_issue_6368.py"
+      ],
+      "explanation": "PR #6439 references issue #6368 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6439",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6408,
+      "linked_issue": 6362,
+      "changed_files": [
+        "tests/test_issue_6362.py"
+      ],
+      "explanation": "PR #6408 references issue #6362 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6408",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6376,
+      "linked_issue": 6181,
+      "changed_files": [
+        "tests/test_issue_6181.py"
+      ],
+      "explanation": "PR #6376 references issue #6181 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6376",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6360,
+      "linked_issue": 6301,
+      "changed_files": [
+        "tests/test_issue_6301.py"
+      ],
+      "explanation": "PR #6360 references issue #6301 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6360",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6327,
+      "linked_issue": 6264,
+      "changed_files": [
+        "tests/test_issue_6264.py"
+      ],
+      "explanation": "PR #6327 references issue #6264 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6327",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6304,
+      "linked_issue": 6230,
+      "changed_files": [
+        "tests/test_issue_6230.py"
+      ],
+      "explanation": "PR #6304 references issue #6230 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6304",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6247,
+      "linked_issue": 6183,
+      "changed_files": [
+        "tests/test_issue_6183.py"
+      ],
+      "explanation": "PR #6247 references issue #6183 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6247",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6201,
+      "linked_issue": 6013,
+      "changed_files": [
+        "tests/test_issue_6013.py"
+      ],
+      "explanation": "PR #6201 references issue #6013 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6201",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6198,
+      "linked_issue": 6065,
+      "changed_files": [
+        "tests/test_issue_6065.py"
+      ],
+      "explanation": "PR #6198 references issue #6065 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6198",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6197,
+      "linked_issue": 6085,
+      "changed_files": [
+        "tests/test_issue_6085.py"
+      ],
+      "explanation": "PR #6197 references issue #6085 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "mem0ai/mem0",
+      "pr_url": "https://github.com/mem0ai/mem0/pull/6197",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "jaythehardcoder",
+      "verified": null
+    },
+    {
+      "pr_number": 6095,
+      "linked_issue": 6071,
+      "changed_files": [
+        "tests/conftest.py",
+        "tests/test_cli.py"
+      ],
+      "explanation": "PR #6095 references issue #6071 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "pallets/flask",
+      "pr_url": "https://github.com/pallets/flask/pull/6095",
+      "pr_state": "closed",
+      "pr_merged_at": "2026-07-30T17:05:05Z",
+      "pr_author": "mgorny",
+      "verified": null
+    },
+    {
+      "pr_number": 6099,
+      "linked_issue": 6071,
+      "changed_files": [
+        "tests/conftest.py",
+        "tests/test_cli.py"
+      ],
+      "explanation": "PR #6099 references issue #6071 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "pallets/flask",
+      "pr_url": "https://github.com/pallets/flask/pull/6099",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "eeshsaxena",
+      "verified": null
+    },
+    {
+      "pr_number": 6088,
+      "linked_issue": 6071,
+      "changed_files": [
+        "tests/conftest.py",
+        "tests/test_cli.py"
+      ],
+      "explanation": "PR #6088 references issue #6071 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "pallets/flask",
+      "pr_url": "https://github.com/pallets/flask/pull/6088",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "Muhtasim-Munif-Fahim",
+      "verified": null
+    },
+    {
+      "pr_number": 6072,
+      "linked_issue": 6071,
+      "changed_files": [
+        "tests/conftest.py",
+        "tests/test_cli.py"
+      ],
+      "explanation": "PR #6072 references issue #6071 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "pallets/flask",
+      "pr_url": "https://github.com/pallets/flask/pull/6072",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "hrnciar",
+      "verified": null
+    },
+    {
+      "pr_number": 6087,
+      "linked_issue": 6071,
+      "changed_files": [
+        "tests/conftest.py",
+        "tests/test_cli.py"
+      ],
+      "explanation": "PR #6087 references issue #6071 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "pallets/flask",
+      "pr_url": "https://github.com/pallets/flask/pull/6087",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "mohamedjaazeer4-sketch",
+      "verified": null
+    },
+    {
+      "pr_number": 22696,
+      "linked_issue": 22695,
+      "changed_files": [
+        "llama-dev/tests/test/test_test.py"
+      ],
+      "explanation": "PR #22696 references issue #22695 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "run-llama/llama_index",
+      "pr_url": "https://github.com/run-llama/llama_index/pull/22696",
+      "pr_state": "open",
+      "pr_merged_at": null,
+      "pr_author": "CoralGarden52",
+      "verified": null
+    },
+    {
+      "pr_number": 21967,
+      "linked_issue": 15165,
+      "changed_files": [
+        "llama-index-core/tests/indices/multi_modal/test_retriever.py"
+      ],
+      "explanation": "PR #21967 references issue #15165 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "run-llama/llama_index",
+      "pr_url": "https://github.com/run-llama/llama_index/pull/21967",
+      "pr_state": "open",
+      "pr_merged_at": null,
+      "pr_author": "maxpetrusenkoagent",
+      "verified": null
+    },
+    {
+      "pr_number": 22576,
+      "linked_issue": 22543,
+      "changed_files": [
+        "llama-index-integrations/indices/llama-index-indices-managed-lancedb/tests/test_index.py"
+      ],
+      "explanation": "PR #22576 references issue #22543 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "run-llama/llama_index",
+      "pr_url": "https://github.com/run-llama/llama_index/pull/22576",
+      "pr_state": "open",
+      "pr_merged_at": null,
+      "pr_author": "ojassharma7",
+      "verified": null
+    },
+    {
+      "pr_number": 22306,
+      "linked_issue": 22068,
+      "changed_files": [
+        "llama-index-integrations/protocols/llama-index-protocols-ag-ui/tests/test_utils.py"
+      ],
+      "explanation": "PR #22306 references issue #22068 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "run-llama/llama_index",
+      "pr_url": "https://github.com/run-llama/llama_index/pull/22306",
+      "pr_state": "open",
+      "pr_merged_at": null,
+      "pr_author": "ErenAta16",
+      "verified": null
+    },
+    {
+      "pr_number": 21608,
+      "linked_issue": 21607,
+      "changed_files": [
+        "llama-dev/llama_dev/test/__init__.py",
+        "llama-dev/tests/test/test_test.py"
+      ],
+      "explanation": "PR #21608 references issue #21607 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "run-llama/llama_index",
+      "pr_url": "https://github.com/run-llama/llama_index/pull/21608",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "dgenio",
+      "verified": null
+    },
+    {
+      "pr_number": 16122,
+      "linked_issue": 8154,
+      "changed_files": [
+        "lib/streamlit/testing/v1/app_test.py",
+        "lib/tests/streamlit/testing/app_test_test.py"
+      ],
+      "explanation": "PR #16122 references issue #8154 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "streamlit/streamlit",
+      "pr_url": "https://github.com/streamlit/streamlit/pull/16122",
+      "pr_state": "closed",
+      "pr_merged_at": "2026-07-22T17:38:55Z",
+      "pr_author": "lukasmasuch",
+      "verified": null
+    },
+    {
+      "pr_number": 15675,
+      "linked_issue": 8154,
+      "changed_files": [
+        "lib/streamlit/testing/v1/app_test.py"
+      ],
+      "explanation": "PR #15675 references issue #8154 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "streamlit/streamlit",
+      "pr_url": "https://github.com/streamlit/streamlit/pull/15675",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "Dodothereal",
+      "verified": null
+    },
+    {
+      "pr_number": 7394,
+      "linked_issue": 7348,
+      "changed_files": [
+        "test/req.is.js"
+      ],
+      "explanation": "PR #7394 references issue #7348 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "expressjs/express",
+      "pr_url": "https://github.com/expressjs/express/pull/7394",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "Errr0rr404",
+      "verified": null
+    },
+    {
+      "pr_number": 7349,
+      "linked_issue": 7348,
+      "changed_files": [
+        "test/req.is.js"
+      ],
+      "explanation": "PR #7349 references issue #7348 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "expressjs/express",
+      "pr_url": "https://github.com/expressjs/express/pull/7349",
+      "pr_state": "closed",
+      "pr_merged_at": null,
+      "pr_author": "roshnithakor07",
+      "verified": null
+    },
+    {
+      "pr_number": 6875,
+      "linked_issue": 6836,
+      "changed_files": [
+        "test/types/logger.tst.ts"
+      ],
+      "explanation": "PR #6875 references issue #6836 with a closing keyword, but every changed file is a test file \u2014 merging would auto-close the issue without fixing it.",
+      "repo": "fastify/fastify",
+      "pr_url": "https://github.com/fastify/fastify/pull/6875",
+      "pr_state": "open",
+      "pr_merged_at": null,
+      "pr_author": "suzunn",
+      "verified": null
+    }
+  ]
+}

@@ -45,7 +45,7 @@ class HttpGitHubClient:
         return headers
 
     async def _get(self, path: str, params: dict | None = None) -> httpx.Response:
-        async with httpx.AsyncClient(timeout=self._timeout) as client:
+        async with httpx.AsyncClient(timeout=self._timeout, follow_redirects=True) as client:
             resp = await client.get(f"{GITHUB_API}{path}", params=params, headers=self._headers())
             resp.raise_for_status()
             return resp
