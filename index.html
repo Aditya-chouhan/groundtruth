@@ -210,7 +210,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P1-high/accepted: mem0&#x27;s agent quick-init path exits 0 without MCP-ready state (JSON envelope missing, MEM0_API_KEY unset). PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6346.py</code></div>
     </div>
     <div class="finding tp">
@@ -220,7 +220,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P1-high/accepted: reranker failure fallback mutates the caller&#x27;s input documents in place, writing rerank_score=0.0 onto them (cohere/huggingface/sentence_transformer/zero_entropy). PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6362.py</code></div>
     </div>
     <div class="finding tp">
@@ -230,7 +230,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/sdk-python/P1-high/accepted: AWS Bedrock Anthropic Converse parsing crashes when a reasoningContent block precedes the text block — indexes content[0] unconditionally. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6368.py</code></div>
     </div>
     <div class="finding tp">
@@ -240,7 +240,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/sdk-python/P1-high/accepted: search(rerank=True) reranks only the already-truncated top-k, so reranking can never surface a result ranked just below the limit. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6448.py</code></div>
     </div>
     <div class="finding tp">
@@ -250,7 +250,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/sdk-python/P1-high/vector-store/accepted: Turbopuffer vector store silently drops every filter operator except gte/lte. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6562.py</code></div>
     </div>
     <div class="finding tp">
@@ -260,7 +260,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P2-medium/sdk-python: LMSTUDIO_BASE_URL env var is ignored because the default URL is baked into config before the env fallback runs. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6526.py</code></div>
     </div>
     <div class="finding tp">
@@ -270,7 +270,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/sdk-python/P1-high/accepted: AWS Bedrock tool calls send malformed Converse requests for amazon and cohere models — system prompt and message-block formatting wrong for non-Anthropic providers. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6563.py</code></div>
     </div>
     <div class="finding tp">
@@ -280,7 +280,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/sdk-python/P1-high/vector-store/accepted: S3 Vectors search score is hardcoded for cosine distance, so euclidean-metric scores clamp to 0.0 for any distance &gt; 1. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6546.py</code></div>
     </div>
     <div class="finding tp">
@@ -290,7 +290,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/sdk-python/P1-high/vector-store/accepted: Redis vector store only handles scalar equality in filters, so operator dicts (gte/lte) and $or are silently ignored. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6550.py</code></div>
     </div>
     <div class="finding tp">
@@ -300,7 +300,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P1-high/vector-store/accepted: UpstashVector.list() ignores its top_k argument — hardcodes top_k=100 internally and never trims results to match the requested count. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6560.py</code></div>
     </div>
     <div class="finding tp">
@@ -310,7 +310,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P1-high/accepted: mem0&#x27;s agent quick-init path exits 0 without MCP-ready state (JSON envelope missing, MEM0_API_KEY unset) — duplicate PR against the same issue as #6644. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6346.py</code></div>
     </div>
     <div class="finding tp">
@@ -320,7 +320,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/sdk-python/P1-high/accepted: AWS Bedrock Anthropic Converse parsing crashes when a reasoningContent block precedes the text block — duplicate PR against the same issue as #6642. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6368.py</code></div>
     </div>
     <div class="finding tp">
@@ -330,7 +330,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P1-high/accepted: reranker failure fallback mutates the caller&#x27;s input documents in place — duplicate PR against the same issue as #6643. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6362.py</code></div>
     </div>
     <div class="finding tp">
@@ -350,7 +350,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug: HuggingFace embedding client drops api_key on the base_url (TEI/HF Inference Endpoint) path — auth is silently never sent. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6301.py</code></div>
     </div>
     <div class="finding tp">
@@ -360,7 +360,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/sdk-python/P1-high/accepted: TS OSS default memory store&#x27;s filter matcher returns on the first operator in a compound field filter, so e.g. {gte, lte} only ever applies gte. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6264.py</code></div>
     </div>
     <div class="finding tp">
@@ -370,7 +370,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P2-medium: XAILLM forwards its already-built httpx.Client into the http_client_proxies argument, crashing whenever a proxy is configured. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6230.py</code></div>
     </div>
     <div class="finding tp">
@@ -380,7 +380,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/sdk-python/P1-high/vector-store/accepted: adding the first memory raises MilvusException on Milvus versions below 2.5. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6183.py</code></div>
     </div>
     <div class="finding tp">
@@ -390,7 +390,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P2-medium: TS OSS Redis vector store builds an invalid RediSearch query string (&#x27;&#x27; instead of &#x27;*&#x27;) when filters are empty or all-null. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6013.py</code></div>
     </div>
     <div class="finding tp">
@@ -400,7 +400,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P2-medium: the Claude Code mem0 plugin&#x27;s auto_search:false setting is dead — no hook script reads MEM0_AUTO_SEARCH, so disabling it has no effect and quota keeps burning. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6065.py</code></div>
     </div>
     <div class="finding tp">
@@ -410,7 +410,7 @@
         <span class="badge tp">true positive</span>
         <span class="unmerged">closed, not merged</span>
       </div>
-      <div class="finding-reason">Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior — a test-only PR correctly closes it.</div>
+      <div class="finding-reason">Issue labeled bug/P1-high/accepted: OSS default config is internally inconsistent — model=None resolves to gpt-5-mini, which rejects the default temperature=0.1, so every add() silently fails LLM extraction. PR only adds a test.</div>
       <div class="finding-files"><code>tests/test_issue_6085.py</code></div>
     </div>
     </div>

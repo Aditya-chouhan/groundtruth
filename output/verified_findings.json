@@ -136,7 +136,7 @@
       "pr_author": "Salomondiei08",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P1-high/accepted: mem0's agent quick-init path exits 0 without MCP-ready state (JSON envelope missing, MEM0_API_KEY unset). PR only adds a test."
     },
     {
       "pr_number": 6643,
@@ -152,7 +152,7 @@
       "pr_author": "Salomondiei08",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P1-high/accepted: reranker failure fallback mutates the caller's input documents in place, writing rerank_score=0.0 onto them (cohere/huggingface/sentence_transformer/zero_entropy). PR only adds a test."
     },
     {
       "pr_number": 6642,
@@ -168,7 +168,7 @@
       "pr_author": "Salomondiei08",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/sdk-python/P1-high/accepted: AWS Bedrock Anthropic Converse parsing crashes when a reasoningContent block precedes the text block \u2014 indexes content[0] unconditionally. PR only adds a test."
     },
     {
       "pr_number": 6641,
@@ -184,7 +184,7 @@
       "pr_author": "Salomondiei08",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/sdk-python/P1-high/accepted: search(rerank=True) reranks only the already-truncated top-k, so reranking can never surface a result ranked just below the limit. PR only adds a test."
     },
     {
       "pr_number": 6625,
@@ -200,7 +200,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/sdk-python/P1-high/vector-store/accepted: Turbopuffer vector store silently drops every filter operator except gte/lte. PR only adds a test."
     },
     {
       "pr_number": 6618,
@@ -216,7 +216,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P2-medium/sdk-python: LMSTUDIO_BASE_URL env var is ignored because the default URL is baked into config before the env fallback runs. PR only adds a test."
     },
     {
       "pr_number": 6617,
@@ -232,7 +232,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/sdk-python/P1-high/accepted: AWS Bedrock tool calls send malformed Converse requests for amazon and cohere models \u2014 system prompt and message-block formatting wrong for non-Anthropic providers. PR only adds a test."
     },
     {
       "pr_number": 6616,
@@ -248,7 +248,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/sdk-python/P1-high/vector-store/accepted: S3 Vectors search score is hardcoded for cosine distance, so euclidean-metric scores clamp to 0.0 for any distance > 1. PR only adds a test."
     },
     {
       "pr_number": 6615,
@@ -264,7 +264,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/sdk-python/P1-high/vector-store/accepted: Redis vector store only handles scalar equality in filters, so operator dicts (gte/lte) and $or are silently ignored. PR only adds a test."
     },
     {
       "pr_number": 6614,
@@ -280,7 +280,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P1-high/vector-store/accepted: UpstashVector.list() ignores its top_k argument \u2014 hardcodes top_k=100 internally and never trims results to match the requested count. PR only adds a test."
     },
     {
       "pr_number": 6440,
@@ -296,7 +296,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P1-high/accepted: mem0's agent quick-init path exits 0 without MCP-ready state (JSON envelope missing, MEM0_API_KEY unset) \u2014 duplicate PR against the same issue as #6644. PR only adds a test."
     },
     {
       "pr_number": 6439,
@@ -312,7 +312,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/sdk-python/P1-high/accepted: AWS Bedrock Anthropic Converse parsing crashes when a reasoningContent block precedes the text block \u2014 duplicate PR against the same issue as #6642. PR only adds a test."
     },
     {
       "pr_number": 6408,
@@ -328,7 +328,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P1-high/accepted: reranker failure fallback mutates the caller's input documents in place \u2014 duplicate PR against the same issue as #6643. PR only adds a test."
     },
     {
       "pr_number": 6376,
@@ -360,7 +360,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug: HuggingFace embedding client drops api_key on the base_url (TEI/HF Inference Endpoint) path \u2014 auth is silently never sent. PR only adds a test."
     },
     {
       "pr_number": 6327,
@@ -376,7 +376,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/sdk-python/P1-high/accepted: TS OSS default memory store's filter matcher returns on the first operator in a compound field filter, so e.g. {gte, lte} only ever applies gte. PR only adds a test."
     },
     {
       "pr_number": 6304,
@@ -392,7 +392,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P2-medium: XAILLM forwards its already-built httpx.Client into the http_client_proxies argument, crashing whenever a proxy is configured. PR only adds a test."
     },
     {
       "pr_number": 6247,
@@ -408,7 +408,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/sdk-python/P1-high/vector-store/accepted: adding the first memory raises MilvusException on Milvus versions below 2.5. PR only adds a test."
     },
     {
       "pr_number": 6201,
@@ -424,7 +424,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P2-medium: TS OSS Redis vector store builds an invalid RediSearch query string ('' instead of '*') when filters are empty or all-null. PR only adds a test."
     },
     {
       "pr_number": 6198,
@@ -440,7 +440,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P2-medium: the Claude Code mem0 plugin's auto_search:false setting is dead \u2014 no hook script reads MEM0_AUTO_SEARCH, so disabling it has no effect and quota keeps burning. PR only adds a test."
     },
     {
       "pr_number": 6197,
@@ -456,7 +456,7 @@
       "pr_author": "jaythehardcoder",
       "verified": null,
       "verdict": "true_positive",
-      "reasoning": "Linked issue is itself about test/CI infrastructure (a broken test assertion, a duplicate test file, a CI matrix), not product behavior \u2014 a test-only PR correctly closes it."
+      "reasoning": "Issue labeled bug/P1-high/accepted: OSS default config is internally inconsistent \u2014 model=None resolves to gpt-5-mini, which rejects the default temperature=0.1, so every add() silently fails LLM extraction. PR only adds a test."
     },
     {
       "pr_number": 6095,
