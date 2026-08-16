@@ -39,6 +39,9 @@
   .repo-head { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; }
   .repo-head h3 { margin:0; font-size:17px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }
   .repo-tally { font-size:13px; color:var(--muted); }
+  .concentration { background:#fff8f0; border:1px solid #f0d9bd; border-radius:8px;
+                     padding:10px 14px; font-size:13.5px; color:#6b4a1f; margin-bottom:14px; }
+  .concentration code { background:var(--chip); color:var(--ink); padding:1px 6px; border-radius:4px; }
   .finding { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:10px; border-left:4px solid var(--fp); }
   .finding.tp { border-left-color:var(--tp); }
   .finding-head { display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:14px; margin-bottom:6px; }
@@ -132,6 +135,7 @@
         <h3>mem0ai/mem0</h3>
         <span class="repo-tally">22 true positives · 6 false positives</span>
       </div>
+      <div class="concentration">17 of these 22 true positives are the same contributor (<code>jaythehardcoder</code>) submitting the same test-only-PR pattern repeatedly — this repo's count is one prolific pattern caught every time, not 22 independent incidents.</div>
       
     <div class="finding fp">
       <div class="finding-head">
@@ -420,6 +424,7 @@
         <span class="repo-tally">3 true positives · 2 false positives</span>
       </div>
       
+      
     <div class="finding fp">
       <div class="finding-head">
         <a href="https://github.com/run-llama/llama_index/pull/22696" target="_blank" rel="noopener">PR #22696</a>
@@ -477,6 +482,7 @@
         <span class="repo-tally">1 true positive · 0 false positives</span>
       </div>
       
+      
     <div class="finding tp">
       <div class="finding-head">
         <a href="https://github.com/fastify/fastify/pull/6875" target="_blank" rel="noopener">PR #6875</a>
@@ -493,6 +499,7 @@
         <h3>expressjs/express</h3>
         <span class="repo-tally">0 true positives · 2 false positives</span>
       </div>
+      
       
     <div class="finding fp">
       <div class="finding-head">
@@ -520,6 +527,7 @@
         <h3>pallets/flask</h3>
         <span class="repo-tally">0 true positives · 5 false positives</span>
       </div>
+      
       
     <div class="finding fp">
       <div class="finding-head">
@@ -577,6 +585,7 @@
         <h3>streamlit/streamlit</h3>
         <span class="repo-tally">0 true positives · 2 false positives</span>
       </div>
+      
       
     <div class="finding fp">
       <div class="finding-head">

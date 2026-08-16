@@ -54,16 +54,37 @@ def finding_card(v):
     </div>"""
 
 
+def concentration_note(items):
+    """Flag when one author accounts for most of a repo's true positives —
+    without this, "N true positives in this repo" reads as N independent
+    incidents when it may really be one contributor's repeated pattern."""
+    tp_items = [v for v in items if v["verdict"] == "true_positive"]
+    if len(tp_items) < 3:
+        return ""
+    counts = defaultdict(int)
+    for v in tp_items:
+        counts[v.get("pr_author") or "unknown"] += 1
+    author, n = max(counts.items(), key=lambda kv: kv[1])
+    if n / len(tp_items) < 0.5:
+        return ""
+    return (f'<div class="concentration">{n} of these {len(tp_items)} true positives are the '
+            f'same contributor (<code>{esc(author)}</code>) submitting the same test-only-PR '
+            f'pattern repeatedly — this repo\'s count is one prolific pattern caught every time, '
+            f'not {len(tp_items)} independent incidents.</div>')
+
+
 def repo_section(repo, items):
     tp = sum(1 for v in items if v["verdict"] == "true_positive")
     fp = len(items) - tp
     cards = "".join(finding_card(v) for v in items)
+    note = concentration_note(items)
     return f"""
     <div class="repo-block">
       <div class="repo-head">
         <h3>{esc(repo)}</h3>
         <span class="repo-tally">{tp} true positive{'s' if tp != 1 else ''} · {fp} false positive{'s' if fp != 1 else ''}</span>
       </div>
+      {note}
       {cards}
     </div>"""
 
@@ -122,6 +143,9 @@ def main():
   .repo-head {{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:10px; }}
   .repo-head h3 {{ margin:0; font-size:17px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; }}
   .repo-tally {{ font-size:13px; color:var(--muted); }}
+  .concentration {{ background:#fff8f0; border:1px solid #f0d9bd; border-radius:8px;
+                     padding:10px 14px; font-size:13.5px; color:#6b4a1f; margin-bottom:14px; }}
+  .concentration code {{ background:var(--chip); color:var(--ink); padding:1px 6px; border-radius:4px; }}
   .finding {{ background:var(--card); border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin-bottom:10px; border-left:4px solid var(--fp); }}
   .finding.tp {{ border-left-color:var(--tp); }}
   .finding-head {{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:14px; margin-bottom:6px; }}
