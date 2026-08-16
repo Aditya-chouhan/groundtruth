@@ -102,6 +102,19 @@ def main():
 
     sections = "".join(repo_section(r, by_repo[r]) for r in ordered_repos)
 
+    # Distinct-issue dedup: 3 true-positive PRs in mem0 share an underlying
+    # issue with another true-positive PR (two different authors independently
+    # hitting the same bug, not one author double-submitting) — report both
+    # the PR-level and the deduplicated issue-level count/precision so a
+    # reader can't derive a worse number than the honest one themselves.
+    tp_pr_count = d["true_positives"]
+    fp_pr_count = d["false_positives"]
+    total_pr_count = d["total_candidates"]
+    distinct_tp_issues = len({(v["repo"], v["linked_issue"]) for v in verdicts if v["verdict"] == "true_positive"})
+    distinct_total_issues = len({(v["repo"], v["linked_issue"]) for v in verdicts})
+    precision_pr = tp_pr_count / total_pr_count
+    precision_issue = distinct_tp_issues / distinct_total_issues
+
     page = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -176,13 +189,18 @@ def main():
   <div class="wrap">
     <span class="tag">Groundtruth · real-data verification run</span>
     <h1>A PR can claim to fix a bug and only add a test. We scanned 30 real repos to see how often.</h1>
-    <p>Groundtruth checks developer activity against deterministic, checkable rules — no LLM guessing. This is its first rule (<code>auto-close-without-fix</code>) run against 30 real, active public repositories, with every candidate match hand-verified against the actual GitHub issue and PR content before being called a finding.</p>
+    <p>Groundtruth checks developer activity against deterministic, checkable rules — no LLM guessing. This is <b>Rule #001</b> (<code>auto-close-without-fix</code>), run against 30 real, active public repositories, with every candidate match hand-verified against the actual GitHub issue and PR content before being called a finding. It is a candidate-generation heuristic with mandatory human verification, not an auto-blocking enforcement gate — see "What this is / is not" below.</p>
     <div class="stats">
       <div class="stat"><b>{d['repos_scanned']}</b><span>real repos scanned</span></div>
       <div class="stat"><b>{d['total_candidates']}</b><span>raw candidate matches</span></div>
       <div class="stat"><b>{d['true_positives']}</b><span>verified true positives</span></div>
+      <div class="stat"><b>{distinct_tp_issues}</b><span>distinct issues (3 pairs share an issue, different authors)</span></div>
       <div class="stat"><b>{d['false_positives']}</b><span>verified false positives</span></div>
       <div class="stat"><b>{d['true_positives_merged']}</b><span>true positives that merged</span></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>{precision_pr:.1%}</b><span>precision, PR-level ({tp_pr_count}/{total_pr_count})</span></div>
+      <div class="stat"><b>{precision_issue:.1%}</b><span>precision, issue-level, deduped ({distinct_tp_issues}/{distinct_total_issues})</span></div>
     </div>
   </div>
 </header>
@@ -192,6 +210,15 @@ def main():
   <div class="thesis">
     <p><b>Auto-close-without-fix:</b> a PR references an issue with a GitHub closing keyword (<code>Fixes #N</code>, <code>Closes #N</code>, <code>Resolves #N</code>) while its diff touches only test files. If that PR merges, GitHub silently closes the issue — without the underlying code ever changing.</p>
     <p>Every finding below is checkable, not probabilistic: the rule doesn't guess whether a PR "seems" thin, it reads the actual linked issue's labels and text, and the actual list of changed files, and applies one fact-based test.</p>
+  </div>
+</section>
+
+<section class="wrap">
+  <h2>What this is / is not</h2>
+  <div class="thesis">
+    <p><b>Is:</b> a candidate-generation heuristic. It flags PRs matching a deterministic pattern, and every flag on this page was then manually checked against the real issue and PR before being called a finding — that manual step is why zero of the true positives below actually caused harm (see "The number that matters most").</p>
+    <p><b>Is not:</b> an auto-blocking enforcement gate. It does not merge, close, or fail a check on its own judgment. Recent tooling (CodeRabbit's Agentic Change Management, launched the same week as their $1.5B valuation; GitHub Copilot's coding-agent auto-validation) automates the verification step itself — this rule automates only the flagging, and treats verification as a human's call, on purpose.</p>
+    <p>Nearest published research: <a href="https://arxiv.org/abs/2601.04886" target="_blank" rel="noopener">arXiv:2601.04886</a> scanned 23,247 AI-authored PRs and named "Phantom Changes" — descriptions claiming a change that was never implemented — as 45.4% of message-code inconsistencies found, releasing a 974-PR annotated dataset because no detector existed at the time. Same failure mode this rule targets, at PR-description granularity rather than repo-artifact granularity. Caveat in the same paper: high-inconsistency PRs are only 1.7% of their full corpus — this is a real but narrow-incidence problem, not a majority-case one.</p>
   </div>
 </section>
 
@@ -250,7 +277,7 @@ def main():
 </section>
 
 <footer class="wrap">
-  Built by Aditya Chouhan · Groundtruth — the AI Company Brain for engineering teams · deterministic checks, not LLM guesses ·
+  Built by Aditya Chouhan · Groundtruth — a deterministic repository-verification rule, verified on real data, not LLM guesses ·
   <a href="https://github.com/Aditya-chouhan/groundtruth">source</a>
 </footer>
 </body>
