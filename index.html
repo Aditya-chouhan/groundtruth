@@ -4,6 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Groundtruth — auto-close-without-fix, verified on real repos</title>
+<meta name="description" content="A deterministic rule that scanned 30 real repos for auto-close-without-fix PRs, with every candidate match hand-verified against the real issue and PR before being called a finding.">
+<link rel="canonical" href="https://aditya-chouhan.github.io/groundtruth/">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#FFFFFF" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#08080A" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Groundtruth — auto-close-without-fix, verified on real repos">
+<meta property="og:description" content="30 real repos scanned, every candidate match hand-verified before being called a finding.">
+<meta property="og:url" content="https://aditya-chouhan.github.io/groundtruth/">
+<meta property="og:image" content="https://aditya-chouhan.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231D1D1F'/%3E%3Ctext x='32' y='44' font-family='-apple-system,BlinkMacSystemFont,Helvetica,Arial' font-size='36' font-weight='600' fill='%23fff' text-anchor='middle'%3EA%3C/text%3E%3C/svg%3E">
 <style>
   :root {
     --ink:#0d1b2a; --muted:#5a6b7b; --line:#e3e8ee; --bg:#f6f8fb;
@@ -65,9 +79,65 @@
   footer { color:var(--muted); font-size:13px; padding:30px 0 60px; }
   a { color:var(--accent); }
   @media (max-width:720px) { .method { grid-template-columns:1fr; } header h1{font-size:24px;} }
+</style><style>
+/* ============ APPLE-DESIGN RETHEME (adapter) ============
+   Kept: true-positive / false-positive colour-coding. This is the page's
+   real, hand-verified classification of each finding — not a decorative
+   trust signal on a self-generated number — so it stays, retinted to a
+   single muted red (the more actionable state) against neutral gray,
+   rather than the original red/teal/cream palette. */
+:root{
+  --ink:#1D1D1F; --muted:#6E6E73; --line:rgba(0,0,0,.08); --bg:#F5F5F7;
+  --card:#FFFFFF; --accent:#0066CC; --tp:#B23A3A; --fp:#6E6E73; --ok:#1D1D1F; --chip:var(--well);
+  --well:rgba(0,0,0,.035); --tp-well:rgba(178,58,58,.08);
+  --hairline-strong:rgba(0,0,0,.14);
+  --e1:0 1px 2px rgba(0,0,0,.04),0 1px 1px rgba(0,0,0,.03);
+  --e2:0 4px 16px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+  --chrome:rgba(255,255,255,.72);--blur-chrome:20px;
+  --damped:cubic-bezier(.32,.72,0,1);--micro:cubic-bezier(.4,0,.2,1);
+}
+@media(prefers-color-scheme:dark){:root{
+  --ink:#F5F5F7; --muted:#A1A1A6; --line:rgba(255,255,255,.10); --bg:#101012;
+  --card:#141416; --accent:#2997FF; --tp:#E08585; --fp:#A1A1A6; --ok:#F5F5F7;
+  --well:rgba(255,255,255,.045); --tp-well:rgba(224,133,133,.12);
+  --hairline-strong:rgba(255,255,255,.18);
+  --e1:0 1px 2px rgba(0,0,0,.5);--e2:0 8px 28px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05);
+  --chrome:rgba(20,20,22,.72);
+}}
+html{scroll-behavior:smooth}
+body{font-optical-sizing:auto;-webkit-font-smoothing:antialiased;transition:background-color .25s ease,color .25s ease}
+h1,h2,h3,h4{font-weight:600!important;letter-spacing:-0.02em}
+header h1{letter-spacing:-0.025em!important}
+a{transition:color .2s var(--damped)}
+header{background:transparent!important;color:var(--ink)!important;border-bottom:1px solid var(--line)}
+header .tag{opacity:1;border-color:var(--line)!important;color:var(--muted)}
+header p{opacity:1;color:var(--muted)}
+.stat{background:var(--card)!important;border-color:var(--line)!important;box-shadow:var(--e1)}
+.stat b{color:var(--ink)}
+.stat span{opacity:1;color:var(--muted)}
+.headline-number,.concentration,.honesty{background:var(--card)!important;border-color:var(--line)!important;box-shadow:var(--e1);color:var(--ink)!important}
+.concentration code{color:var(--ink)!important}
+.bugfound p,.finding-reason{color:var(--ink)!important}
+.badge.tp,.merged{background:var(--tp-well)!important}
+.badge.fp{background:var(--well)!important}
+.thesis,.bugfound,.finding,.method .box{box-shadow:var(--e1);transition:box-shadow .3s var(--damped)}
+.finding:hover,.bugfound:hover{box-shadow:var(--e2)}
+.stat,.finding,.bugfound,.headline-number,.concentration{overflow-wrap:anywhere}
+.pf-nav{position:sticky;top:0;z-index:50;height:52px;display:flex;align-items:center;border-bottom:1px solid transparent;
+  transition:background-color .35s var(--damped),backdrop-filter .35s var(--damped),border-color .35s var(--damped)}
+.pf-nav[data-stuck="true"]{background:var(--chrome);-webkit-backdrop-filter:blur(var(--blur-chrome)) saturate(180%);backdrop-filter:blur(var(--blur-chrome)) saturate(180%);border-bottom-color:var(--line)}
+.pf-nav-inner{width:100%;max-width:1040px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.pf-back{display:inline-flex;align-items:center;gap:8px;font:500 15px -apple-system,BlinkMacSystemFont,sans-serif;color:var(--ink);text-decoration:none}
+.pf-back .arrow{display:inline-block;transition:transform .25s var(--damped)}
+.pf-back:hover .arrow{transform:translateX(-3px)}
+.pf-nav-right a{font:500 15px -apple-system,BlinkMacSystemFont,sans-serif;color:var(--muted);text-decoration:none;margin-left:20px}
+.pf-nav-right a:hover{color:var(--ink)}
+[data-pf-reveal="pending"]{opacity:0;transform:translateY(16px);filter:blur(6px)}
+[data-pf-reveal="in"]{opacity:1;transform:none;filter:blur(0);transition:opacity .55s var(--damped),transform .55s var(--damped),filter .55s var(--damped)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}[data-pf-reveal]{opacity:1!important;transform:none!important;filter:none!important}}
 </style>
 </head>
-<body>
+<body><nav class="pf-nav" id="pfNav" aria-label="Primary"><div class="pf-nav-inner"><a class="pf-back" href="https://aditya-chouhan.github.io/"><span class="arrow">&larr;</span> Aditya Chouhan</a><span class="pf-nav-right"><a href="https://github.com/Aditya-chouhan/groundtruth">Repository</a><a href="mailto:ai.adityachouhan@gmail.com?subject=Project">Get in touch</a></span></div></nav>
 <header>
   <div class="wrap">
     <span class="tag">Groundtruth · real-data verification run</span>
@@ -641,5 +711,35 @@
   Built by Aditya Chouhan · Groundtruth — a deterministic repository-verification rule, verified on real data, not LLM guesses ·
   <a href="https://github.com/Aditya-chouhan/groundtruth">source</a>
 </footer>
+<script>(function(){
+  'use strict';
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nav = document.getElementById('pfNav');
+  var hero = document.querySelector('header');
+  if (nav && hero) {
+    var setStuck = function(){ nav.dataset.stuck = (window.scrollY > hero.offsetHeight - 52) ? 'true' : 'false'; };
+    setStuck(); window.addEventListener('scroll', setStuck, {passive:true});
+  }
+  if (!reduce && 'IntersectionObserver' in window) {
+    var targets = document.querySelectorAll('section, .finding, .bugfound, .method .box');
+    Array.prototype.forEach.call(targets, function(el){ el.dataset.pfReveal = 'pending'; });
+    var io = new IntersectionObserver(function(entries){
+      var i = 0;
+      entries.forEach(function(entry){
+        if (!entry.isIntersecting) return;
+        var el = entry.target;
+        el.style.transitionDelay = (i*30)+'ms'; i++;
+        el.dataset.pfReveal = 'in';
+        io.unobserve(el);
+      });
+    }, {threshold:0.05, rootMargin:'0px 0px -5% 0px'});
+    Array.prototype.forEach.call(targets, function(el){ io.observe(el); });
+    setTimeout(function(){
+      Array.prototype.forEach.call(document.querySelectorAll('[data-pf-reveal="pending"]'), function(el){
+        el.style.transitionDelay='0ms'; el.dataset.pfReveal='in';
+      });
+    }, 1200);
+  }
+})();</script>
 </body>
 </html>
